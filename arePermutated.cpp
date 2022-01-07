@@ -25,16 +25,7 @@ bool arePermutated (string A ,string B)
     }
 
     return true;
-
-
 }
-
-
-
-
-
-
-
 int main()
 {
     string A = "test";
