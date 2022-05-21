@@ -54,3 +54,30 @@ ListNode* reverseList(ListNode* head) {
         
     }
 };
+
+//appraoch 3 (also recursive)
+class Solution {
+public:
+ListNode* reverse(ListNode* &head)
+{
+    //base case
+    if(head==NULL || head->next==NULL)
+    {
+        return head;
+    }
+    
+    ListNode* chotahead = reverse(head->next);
+    head->next->next=head;
+    head->next=NULL;
+    
+    return chotahead;
+    
+    
+}
+ListNode* reverseList(ListNode* head) {
+
+        
+        return reverse(head);
+        
+    }
+};
