@@ -1,0 +1,74 @@
+// MEMOIZATION
+
+int f(int ind, vector<int> &num, int tar, vector<vector<int>> &dp)
+{
+    if (tar == 0)
+        return 1;
+
+    if (ind == 0)
+        return num[0] == tar;
+
+    if (dp[ind][tar] != -1)
+        return dp[ind][tar];
+
+    int notTaken = f(ind - 1, num, tar, dp);
+
+    int taken = 0;
+    if (num[ind] <= tar)
+        taken = f(ind - 1, num, tar - num[ind], dp);
+
+    return dp[ind][tar] = notTaken + taken;
+}
+int findWays(vector<int> &num, int tar)
+{
+    // Write your code here.
+    int n = num.size();
+    vector<vector<int>> dp(n, vector<int>(tar + 1, -1));
+    return f(n - 1, num, tar, dp);
+}
+
+// TABULATION
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int findWays(vector<int> &num, int k)
+{
+    int n = num.size();
+
+    vector<vector<int>> dp(n, vector<int>(k + 1, 0));
+
+    for (int i = 0; i < n; i++)
+    {
+        dp[i][0] = 1;
+    }
+
+    if (num[0] <= k)
+        dp[0][num[0]] = 1;
+
+    for (int ind = 1; ind < n; ind++)
+    {
+        for (int target = 1; target <= k; target++)
+        {
+
+            int notTaken = dp[ind - 1][target];
+
+            int taken = 0;
+            if (num[ind] <= target)
+                taken = dp[ind - 1][target - num[ind]];
+
+            dp[ind][target] = notTaken + taken;
+        }
+    }
+
+    return dp[n - 1][k];
+}
+
+int main()
+{
+
+    vector<int> arr = {1, 2, 2, 3};
+    int k = 3;
+
+    cout << "The number of subsets found are " << findWays(arr, k);
+}
