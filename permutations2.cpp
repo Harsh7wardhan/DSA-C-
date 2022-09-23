@@ -1,34 +1,27 @@
-class Solution {
-private:
-     void solve(vector<vector<int>> &ans,vector<int> nums,int index)
+class Solution
+{
+public:
+    set<vector<int>> ans;
+    void permutation(vector<int> &nums, int i)
     {
-        //base case
-        if(index>=nums.size())
+        if (i == nums.size())
         {
-            ans.push_back(nums);
+            ans.insert(nums);
             return;
         }
-        
-        unordered_set<int> s;
-        for(int j=index;j<nums.size();j++)
+
+        for (int j = i; j < nums.size(); j++)
         {
-            if(s.find(nums[j])!=s.end())
-                continue;
-            s.insert(nums[j]);
-            swap(nums[index],nums[j]);
-            solve(ans,nums,index+1);
-            //backtrack
-            swap(nums[index],nums[j]);
-            
+            swap(nums[i], nums[j]);
+            permutation(nums, i + 1);
+            swap(nums[i], nums[j]);
         }
-        
     }
-    
-public:
-    vector<vector<int>> permuteUnique(vector<int>& nums) {
-        vector<vector<int>> ans;
-        int index = 0;
-        solve(ans,nums,index);
-        return ans;
+
+    vector<vector<int>> permuteUnique(vector<int> &nums)
+    {
+        permutation(nums, 0);
+        vector<vector<int>> res(ans.begin(), ans.end());
+        return res;
     }
 };
