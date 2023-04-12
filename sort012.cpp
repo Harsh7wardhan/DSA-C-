@@ -69,6 +69,7 @@ void insertattail(Node *&tail, Node *&curr)
     tail->next = curr;
     tail = curr;
 }
+
 Node *sortList(Node *head)
 {
     Node *zeroathead = new Node(-1);
